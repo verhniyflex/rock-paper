@@ -1,58 +1,39 @@
-
 fun main() {
-
-    val options: Array<String> = arrayOf("Rock", "Paper", "Scissors")
-    val gameChoice = getGameChoice(options)
+    val options: Array<String> = arrayOf("Itachi", "Sasuke", "Naruto")
     val userChoice = getUserChoice(options)
-    printResult(userChoice, gameChoice)
+    val compChoice = getCompChoice(options)
+    printResult(userChoice, compChoice)
 }
+//
 
-fun getGameChoice(optionsParam: Array<String>) =
-    optionsParam[(Math.random() * optionsParam.size).toInt()]
-
-fun getUserChoice(optionsParam: Array<String>): String {
+fun getUserChoice(optionsArray: Array<String>): String {
     var isValidChoice = false
     var userChoice = ""
-
     while (!isValidChoice) {
-        print("Please enter one of the following:")
-        for (item in optionsParam) print(" $item")
-        println(".")
+        print(" Choose from:")
+        for (item in optionsArray) print(" $item")
+        println("")
         val userInput = readLine()?.capitalize()
-
-
-        if (userInput != null && userInput in optionsParam) {
+        if (userInput != null && userInput in optionsArray) {
             isValidChoice = true
             userChoice = userInput
         }
-        if (!isValidChoice) println("You must enter a valid choice.")
+        if (!isValidChoice) print("choose other name")
     }
     return userChoice
-
 }
+//
 
-fun printResult(userChoice: String, gameChoice: String) {
-    val result: String
-    if (userChoice == gameChoice) result = "Tie!"
-    else if ((userChoice == "Rock" && gameChoice == "Scissors") ||
-            (userChoice == "Scissors" && gameChoice == "Paper") ||
-            (userChoice == "Paper" && gameChoice == "Rock")) result = "You win!"
-    else result = "You lose!"
-    println("You chose $userChoice. I chose $gameChoice. $result")
+fun getCompChoice(optionsList: Array<String>) =
+    optionsList[(Math.random() * optionsList.size).toInt()]
+//
+
+fun printResult(userChoice: String, compChoice: String) {
+    var result: String = ""
+    if (userChoice == compChoice) print("Tie!")
+    else if ((userChoice == "Naruto" && compChoice == "Sasuke") ||
+            (userChoice == "Naruto" && compChoice == "Itachi") ||
+            (userChoice == "Sasuke" && compChoice == "Itachi")) result = "You win"
+            else result = "you lose"
+    println("You choose $userChoice i choose $compChoice. $result")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
