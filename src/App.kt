@@ -1,19 +1,21 @@
-class Song(val title: String, val artist: String) {
-    fun play() {
-        println("Playing the song $title by $artist")
+class DrumKit(var hasTopHat: Boolean, var hasSnare: Boolean) {
+    fun playTopHat() {
+        if (!hasTopHat) println("ding ding ba-da-bing!")
+
+    }
+    fun playSnare() {
+        if (hasSnare) println("bang bang bang!")
     }
 
-    fun stop() {
-        println("Stopped playing $title")
-    }
 }
 
 fun main() {
-    val songOne = Song("Oversized", "Basement")
-    val songTwo = Song("505", "Arctic Monkeys")
-    val songThree = Song("Creep", "Radiohead")
-    songTwo.play()
-    songTwo.stop()
-    songThree.play()
+    val d = DrumKit(true, true)
+    d.hasTopHat = false
+    d.playTopHat()
+    d.playSnare()
+    d.hasSnare = false
+    d.playTopHat()
+    d.playSnare()
 }
 
