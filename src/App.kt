@@ -1,36 +1,149 @@
-class Dog(val name: String, weight_param: Int, breed_param: String) {
-    init {
-        print("Dog $name has been created. ")
+interface Roamable {
+    fun roam()
+}
+
+abstract class Animal : Roamable {
+    abstract val image: String
+    abstract val food: String
+    abstract val habitat: String
+    var hunger = 10
+    abstract fun makeNoise()
+
+    abstract fun eat()
+
+    override fun roam() {
+        println("The Animal is roaming")
     }
-    var activities = arrayOf("Walks")
-    val breed = breed_param.uppercase()
-    init {
-        println("The breed is $breed.")
+    fun sleep() {
+        println("The Animal is sleeping")
     }
-    var weight = weight_param
-        set(value) {
-            if (value > 0) field = value
-        }
-    val weightInKgs: Double
-        get() = weight / 2.2
-    fun bark() {
-        println(if (weight < 20) "Yip!" else "Woof!")
+}
+class Hippo : Animal() {
+    override val image = "hippo.jpg"
+    override val food = "grass"
+    override val habitat = "water"
+    override fun makeNoise() {
+        println("Grunt! Grunt!")
+    }
+    override fun eat() {
+        println("The Hippo is eating $food")
+    }
+}
+abstract class Canine : Animal() {
+    override fun roam() {
+        println("The Canine is roaming")
     }
 }
 
-fun main(args: Array<String>) {
-    val myDog = Dog("Fido", 70, "Mixed")
-    myDog.bark()
-    myDog.weight = 75
-    println("Weight in Kgs is ${myDog.weightInKgs}")
-    myDog.weight = -2
-    println("Weight is ${myDog.weight}")
-    myDog.activities = arrayOf("Walks", "Fetching balls", "Frisbee")
-    for (item in myDog.activities) {
-        println("My dog enjoys $item")
+class Wolf : Canine() {
+    override val image = "wolf.jpg"
+    override val food = "meat"
+    override val habitat = "forests"
+
+    override fun makeNoise() {
+        println("Hooooowl!")
     }
-    val dogs = arrayOf(Dog("Kelpie", 20, "Westie"), Dog("Ripper", 10, "Poodle"))
-    dogs[0].bark()
-    dogs[1].weight = 15
-    println("Weight for ${dogs[0].name} is ${dogs[0].weight}")
+    override fun eat() {
+        println("The Wolf is eating $food")
+    }
 }
+
+class Vehicle : Roamable {
+    override fun roam() {
+        println("The Vehicle is roaming")
+    }
+}
+
+
+class Vet {
+    fun giveShot(animal: Animal) {
+        animal.makeNoise()
+    }
+}
+fun main(args: Array<String>) {
+    val animals = arrayOf(Hippo(), Wolf())
+    for (item in animals) {
+        item.roam()
+        item.eat()
+    }
+    val vet = Vet()
+    val wolf = Wolf()
+    val hippo = Hippo()
+    vet.giveShot(wolf)
+    vet.giveShot(hippo)
+
+    val roamables = arrayOf(Hippo(), Wolf(), Vehicle())
+    for (item in roamables) {
+        item.roam()
+        if (item is Animal) {
+            item.eat()
+        }
+    }
+
+    val f = arrayOf(Bird(), Plane(), Superhero())
+    var x = 0
+    while (x in 0..2) {
+        val y = when (f[x]) {
+            is Bird -> false
+            else -> true
+        }
+        if (y) {f[x].fly()}
+        x++
+    }
+
+}
+
+abstract class Appliance {
+    var pluggedIn = true
+    abstract val color: String
+    abstract fun consumePower()
+}
+
+class CoffeMaker : Appliance() {
+    override val color = ""
+    var coffeeLeft = false
+
+    override fun consumePower() {
+        println("Consuming power")
+    }
+
+    fun fillWithWater() {
+        println("Fill with water")
+    }
+    fun makeCoffee() {
+        println("Make the coffee")
+    }
+}
+
+//class X : A, B { // класс Х реализует интерфейсы А и В
+//    }
+//class Y : C(), A // реализует интерфейс А и наследуется от класса С
+
+interface Flyable {
+    val x: String
+
+    fun fly() {
+        println("$x is flying")
+    }
+}
+
+class Bird : Flyable {
+    override val x = "Bird"
+}
+
+class Plane : Flyable {
+    override val x = "Plane"
+}
+
+class Superhero : Flyable {
+    override val x = "Superhero"
+}
+
+
+
+
+
+
+
+
+
