@@ -1,149 +1,50 @@
-interface Roamable {
-    fun roam()
+data class Recipe(val title: String,
+                  val mainIngredient: String,
+                  val isVegetarian: Boolean = false,
+                  val difficulty: String = "Easy") {
+
 }
-
-abstract class Animal : Roamable {
-    abstract val image: String
-    abstract val food: String
-    abstract val habitat: String
-    var hunger = 10
-    abstract fun makeNoise()
-
-    abstract fun eat()
-
-    override fun roam() {
-        println("The Animal is roaming")
-    }
-    fun sleep() {
-        println("The Animal is sleeping")
+class Mushroom(val size: Int, val isMagic: Boolean) {
+    constructor(isMagic_param: Boolean) : this(0, isMagic_param) {
+        //Код, выполняемый при вызове вторичного конструктора
     }
 }
-class Hippo : Animal() {
-    override val image = "hippo.jpg"
-    override val food = "grass"
-    override val habitat = "water"
-    override fun makeNoise() {
-        println("Grunt! Grunt!")
-    }
-    override fun eat() {
-        println("The Hippo is eating $food")
-    }
-}
-abstract class Canine : Animal() {
-    override fun roam() {
-        println("The Canine is roaming")
-    }
+fun findRecipes(title: String = "",
+                ingredient: String = "",
+                isVegetarian: Boolean = false,
+                difficulty: String = "") : Array<Recipe> {
+    //Код поиска рецептов
+    return arrayOf(Recipe(title, ingredient, isVegetarian, difficulty))
 }
 
-class Wolf : Canine() {
-    override val image = "wolf.jpg"
-    override val food = "meat"
-    override val habitat = "forests"
-
-    override fun makeNoise() {
-        println("Hooooowl!")
-    }
-    override fun eat() {
-        println("The Wolf is eating $food")
-    }
+fun addNumbers(a: Int, b: Int) : Int {
+    return a + b
 }
 
-class Vehicle : Roamable {
-    override fun roam() {
-        println("The Vehicle is roaming")
-    }
+fun addNumbers(a: Double, b: Double) : Double {
+    return a + b
 }
 
-
-class Vet {
-    fun giveShot(animal: Animal) {
-        animal.makeNoise()
-    }
-}
 fun main(args: Array<String>) {
-    val animals = arrayOf(Hippo(), Wolf())
-    for (item in animals) {
-        item.roam()
-        item.eat()
-    }
-    val vet = Vet()
-    val wolf = Wolf()
-    val hippo = Hippo()
-    vet.giveShot(wolf)
-    vet.giveShot(hippo)
+    val r1 = Recipe("Thai Curry", "Chicken")
+    val r2 = Recipe(title = "Thai Curry", mainIngredient = "Chicken")
+    val r3 = r1.copy(title = "Chicken Bhuna")
+    println("r1 hash code: ${r1.hashCode()}")
+    println("r2 hash code: ${r2.hashCode()}")
+    println("r3 hash code: ${r3.hashCode()}")
+    println("r1 toString: ${r1.toString()}")
+    println("r1 == r2? ${r1 == r2}")
+    println("r1 === r2? ${r1 === r2}")
+    println("r1 == r3? ${r1 == r3}")
+    val (title, mainIngredient, vegetarian, difficulty) = r1
+    println("title is $title and vegetarian is $vegetarian")
 
-    val roamables = arrayOf(Hippo(), Wolf(), Vehicle())
-    for (item in roamables) {
-        item.roam()
-        if (item is Animal) {
-            item.eat()
-        }
-    }
+    val m1 = Mushroom(6, false)
+    println("m1 size is ${m1.size} and isMagic is ${m1.isMagic}")
 
-    val f = arrayOf(Bird(), Plane(), Superhero())
-    var x = 0
-    while (x in 0..2) {
-        val y = when (f[x]) {
-            is Bird -> false
-            else -> true
-        }
-        if (y) {f[x].fly()}
-        x++
-    }
+    val m2 = Mushroom(true)
+    println("m2 size is ${m2.size} and isMagic is ${m2.isMagic}")
 
+    println(addNumbers(2, 5))
+    println(addNumbers(1.6, 7.3))
 }
-
-abstract class Appliance {
-    var pluggedIn = true
-    abstract val color: String
-    abstract fun consumePower()
-}
-
-class CoffeMaker : Appliance() {
-    override val color = ""
-    var coffeeLeft = false
-
-    override fun consumePower() {
-        println("Consuming power")
-    }
-
-    fun fillWithWater() {
-        println("Fill with water")
-    }
-    fun makeCoffee() {
-        println("Make the coffee")
-    }
-}
-
-//class X : A, B { // класс Х реализует интерфейсы А и В
-//    }
-//class Y : C(), A // реализует интерфейс А и наследуется от класса С
-
-interface Flyable {
-    val x: String
-
-    fun fly() {
-        println("$x is flying")
-    }
-}
-
-class Bird : Flyable {
-    override val x = "Bird"
-}
-
-class Plane : Flyable {
-    override val x = "Plane"
-}
-
-class Superhero : Flyable {
-    override val x = "Superhero"
-}
-
-
-
-
-
-
-
-
-
